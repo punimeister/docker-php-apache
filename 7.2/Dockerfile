@@ -27,7 +27,7 @@ COPY php.ini overwrite-php.ini.sh /usr/local/etc/php/
 RUN a2enmod rewrite expires ssl
 
 # Install xdebug
-RUN pecl install xdebug
+RUN pecl install xdebug-2.6.1
 
 ENV ERROR_LOG='0' \
     REMOTE_DEBUG='0'

@@ -26,6 +26,10 @@ COPY php.ini overwrite-php.ini.sh /usr/local/etc/php/
 # Apache Configuration
 RUN a2enmod rewrite expires ssl
 
-ENV ERROR_LOG='0'
+# Install xdebug
+RUN pecl install xdebug-2.5.5
+
+ENV ERROR_LOG='0' \
+    REMOTE_DEBUG='0'
 
 CMD sh -c "sh /usr/local/etc/php/overwrite-php.ini.sh && apache2-foreground"
