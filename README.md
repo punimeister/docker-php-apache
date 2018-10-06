@@ -111,20 +111,20 @@ services:
       ERROR_LOG: '0'
       REMOTE_DEBUG: '0'
     ports:
-    - '80:80'
-    - '443:443'
+      - '80:80'
+      - '443:443'
     volumes:
-    - './web:/var/www/html'
-    - './conf/default.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
-    - './conf/ssl.conf:/etc/apache2/sites-enabled/000-ssl.conf:ro'
-    - './conf/certificate:/certificate:ro'
+      - './web:/var/www/html'
+      - './conf/default.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
+      - './conf/ssl.conf:/etc/apache2/sites-enabled/000-ssl.conf:ro'
+      - './conf/certificate:/certificate:ro'
     depends_on:
-    - 'create-certificate'
+      - 'create-certificate'
 
   create-certificate:
     image: 'punimeister/create-certificate'
     environment:
       CERTS: 'docker'
     volumes:
-    - './conf/certificate:/app/certificate'
+      - './conf/certificate:/app/certificate'
 ```
