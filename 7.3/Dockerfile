@@ -16,6 +16,7 @@ RUN apt-get update \
     libpng-dev \
     libpq-dev \
     libxml2-dev \
+    libzip-dev \
  && docker-php-ext-configure gd --with-jpeg-dir=/usr --with-png-dir=/usr \
  && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
  && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
