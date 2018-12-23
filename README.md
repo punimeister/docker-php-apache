@@ -7,6 +7,7 @@
 
 ## Source Code
 
+### [php-apache:7.3](https://github.com/punimeister/docker-php-apache/tree/master/7.3)
 ### [php-apache:7.2](https://github.com/punimeister/docker-php-apache/tree/master/7.2)
 ### [php-apache:7.0](https://github.com/punimeister/docker-php-apache/tree/master/7.0)
 ### [php-apache:5.6](https://github.com/punimeister/docker-php-apache/tree/master/5.6)
@@ -105,7 +106,7 @@ version: '3'
 services:
 
   php-apache:
-    image: 'punimeister/php-apache:7.2'
+    image: 'punimeister/php-apache:7.3'
     restart: 'on-failure'
     environment:
       ERROR_LOG: '0'
