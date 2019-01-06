@@ -1,16 +1,9 @@
-# punimeister/php-apache
+# Supported tags and respective `Dockerfile` links
 
-[![Docker Stars](https://img.shields.io/docker/stars/punimeister/php-apache.svg)](https://hub.docker.com/r/punimeister/php-apache/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/punimeister/php-apache.svg)](https://hub.docker.com/r/punimeister/php-apache/)
-[![Docker Automated](https://img.shields.io/docker/automated/punimeister/php-apache.svg)](https://hub.docker.com/r/punimeister/php-apache/)
-[![Docker Build](https://img.shields.io/docker/build/punimeister/php-apache.svg)](https://hub.docker.com/r/punimeister/php-apache/)
-
-## Source Code
-
-### [php-apache:7.3](https://github.com/punimeister/docker-php-apache/tree/master/7.3)
-### [php-apache:7.2](https://github.com/punimeister/docker-php-apache/tree/master/7.2)
-### [php-apache:7.0](https://github.com/punimeister/docker-php-apache/tree/master/7.0)
-### [php-apache:5.6](https://github.com/punimeister/docker-php-apache/tree/master/5.6)
+- [`7.3` (7.3/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/master/7.3/Dockerfile)
+- [`7.2` (7.2/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/master/7.2/Dockerfile)
+- [`7.0` (7.0/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/master/7.0/Dockerfile)
+- [`5.6` (5.6/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/master/5.6/Dockerfile)
 
 ## Environment Variables
 
