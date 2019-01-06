@@ -1,6 +1,6 @@
 # Supported tags and respective `Dockerfile` links
 
-- [`7.3` (7.3/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/7.3/Dockerfile)
+- [`7.3`, `latest` (7.3/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/7.3/Dockerfile)
 - [`7.2` (7.2/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/7.2/Dockerfile)
 - [`7.0` (7.0/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/7.0/Dockerfile)
 - [`5.6` (5.6/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/5.6/Dockerfile)
@@ -99,7 +99,7 @@ version: '3'
 services:
 
   php-apache:
-    image: 'punimeister/php-apache:7.3'
+    image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
       ERROR_LOG: '0'
