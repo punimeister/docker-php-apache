@@ -1,4 +1,4 @@
-FROM php:5.6-apache
+FROM php:7.0-apache
 
 # PHP extension etc.
 RUN apt-get update \
@@ -42,15 +42,15 @@ RUN apt-get update \
  && apt-get purge --auto-remove -y \
  && rm -rf /var/lib/apt/lists/*
 
-COPY ../conf/default.conf /etc/apache2/sites-enabled/000-default.conf
+COPY conf/default.conf /etc/apache2/sites-enabled/000-default.conf
 
-COPY ../conf/php.ini ../conf/overwrite-php.ini.sh /usr/local/etc/php/
+COPY conf/php.ini conf/overwrite-php.ini.sh /usr/local/etc/php/
 
 # Apache Configuration
 RUN a2enmod rewrite expires ssl
 
 # Install xdebug
-RUN pecl install xdebug-2.5.5
+RUN pecl install xdebug-2.6.1
 
 ENV ERROR_LOG='0' \
     REMOTE_DEBUG='0'
