@@ -41,9 +41,9 @@ RUN apt-get update \
  && apt-get purge --auto-remove -y \
  && rm -rf /var/lib/apt/lists/*
 
-COPY default.conf /etc/apache2/sites-enabled/000-default.conf
+COPY ../conf/default.conf /etc/apache2/sites-enabled/000-default.conf
 
-COPY php.ini overwrite-php.ini.sh /usr/local/etc/php/
+COPY ../conf/php.ini ../conf/overwrite-php.ini.sh /usr/local/etc/php/
 
 # Apache Configuration
 RUN a2enmod rewrite expires ssl
