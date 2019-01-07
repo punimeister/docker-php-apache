@@ -3,7 +3,7 @@ version: '3'
 services:
 
   php-apache:
-    image: 'punimeister/php-apache:5.6'
+    image: 'punimeister/php-apache:7.2'
     restart: 'on-failure'
     environment:
       ERROR_LOG: '0'
