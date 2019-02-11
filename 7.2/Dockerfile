@@ -34,11 +34,6 @@ RUN buildDeps=" \
  && rm -r /var/lib/apt/lists/* \
  && a2enmod rewrite expires ssl
 
-# Install mkcert.
-WORKDIR /usr/local/bin
-RUN wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64 \
- && chmod +x mkcert
-
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
  && ln -s $(composer config --global home) /root/composer
@@ -46,6 +41,11 @@ ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
 
 # Install xdebug.
 RUN pecl install xdebug-2.6.1
+
+# Install mkcert.
+WORKDIR /usr/local/bin
+RUN wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64 \
+ && chmod +x mkcert
 
 # Copy config files.
 COPY default.conf /etc/apache2/sites-enabled/000-default.conf
