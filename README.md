@@ -1,3 +1,5 @@
+# Please use only during development
+
 # Supported tags and respective `Dockerfile` links
 
 - [`7.3`, `latest` (7.3/Dockerfile)](https://github.com/punimeister/docker-php-apache/blob/master/7.3/Dockerfile)
@@ -7,13 +9,18 @@
 
 ## Environment Variables
 
-### `ERROR_LOG`
-
-When set to 1 enable to error log
-
 ### `REMOTE_DEBUG`
 
 When set to 1 enable to remote debug (xdebug)
+
+## Configuration files (in docker container)
+
+- Apache HTTP config ... `/etc/apache2/sites-enabled/000-default.conf`
+- Apache HTTPS config ... `/etc/apache2/sites-enabled/000-ssl.conf`
+- php.ini ... `/usr/local/etc/php/php.ini`
+- xdebug.ini ... `/usr/local/etc/php/conf.d/xdebug.ini`
+- rootCA.pem ... `/root/.local/share/mkcert/rootCA.pem`
+- rootCA-key.pem ... `/root/.local/share/mkcert/rootCA-key.pem`
 
 ## Example
 
@@ -21,74 +28,11 @@ When set to 1 enable to remote debug (xdebug)
 
 ```
 .
-├── conf
-│   ├── certificate
-│   ├── default.conf
-│   └── ssl.conf
+├── certs
 ├── docker-compose.yml
 └── web
     └── public
         └── index.php
-```
-
-### default.conf
-
-```
-<VirtualHost *:80>
-  ServerAdmin webmaster@localhost
-  DocumentRoot /var/www/html/public
-
-  <Directory "/var/www/html">
-    Options -Indexes +FollowSymLinks
-    AllowOverride All
-    Require all granted
-  </Directory>
-
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-  Alias /log/ "/var/log/"
-  <Directory "/var/log/">
-    Options Indexes MultiViews FollowSymLinks
-    AllowOverride None
-    Order deny,allow
-    Deny from all
-    Allow from all
-    Require all granted
-  </Directory>
-</VirtualHost>
-```
-
-### ssl.conf
-
-```
-<VirtualHost *:443>
-  ServerAdmin webmaster@localhost
-  DocumentRoot /var/www/html/public
-
-  SSLEngine on
-  SSLCertificateFile "/certificate/docker.crt"
-  SSLCertificateKeyFile "/certificate/docker.key"
-
-  <Directory "/var/www/html">
-    Options -Indexes +FollowSymLinks
-    AllowOverride All
-    Require all granted
-  </Directory>
-
-  ErrorLog ${APACHE_LOG_DIR}/error.log
-  CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-  Alias /log/ "/var/log/"
-  <Directory "/var/log/">
-    Options Indexes MultiViews FollowSymLinks
-    AllowOverride None
-    Order deny,allow
-    Deny from all
-    Allow from all
-    Require all granted
-  </Directory>
-</VirtualHost>
 ```
 
 ### docker-compose.yml
@@ -102,23 +46,11 @@ services:
     image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
-      ERROR_LOG: '0'
       REMOTE_DEBUG: '0'
     ports:
       - '80:80'
       - '443:443'
     volumes:
+      - './certs:/root/.local/share/mkcert'
       - './web:/var/www/html'
-      - './conf/default.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
-      - './conf/ssl.conf:/etc/apache2/sites-enabled/000-ssl.conf:ro'
-      - './conf/certificate:/certificate:ro'
-    depends_on:
-      - 'create-certificate'
-
-  create-certificate:
-    image: 'punimeister/create-certificate'
-    environment:
-      CERTS: 'docker'
-    volumes:
-      - './conf/certificate:/app/certificate'
 ```

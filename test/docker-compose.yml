@@ -6,22 +6,10 @@ services:
     image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
-      ERROR_LOG: '0'
       REMOTE_DEBUG: '0'
     ports:
       - '80:80'
       - '443:443'
     volumes:
+      - './certs:/root/.local/share/mkcert'
       - './web:/var/www/html'
-      - './conf/default.conf:/etc/apache2/sites-enabled/000-default.conf:ro'
-      - './conf/ssl.conf:/etc/apache2/sites-enabled/000-ssl.conf:ro'
-      - './conf/certificate:/certificate:ro'
-    depends_on:
-      - 'create-certificate'
-
-  create-certificate:
-    image: 'punimeister/create-certificate'
-    environment:
-      CERTS: 'docker'
-    volumes:
-      - './conf/certificate:/app/certificate'
