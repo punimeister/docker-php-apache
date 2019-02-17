@@ -11,7 +11,7 @@
 
 ### `REMOTE_DEBUG`
 
-When set to 1 enable to remote debug (xdebug)
+When set to 1 enable to remote debug (Xdebug)
 
 ## Configuration files (in docker container)
 
