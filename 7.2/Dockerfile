@@ -63,7 +63,7 @@ WORKDIR /var/www/html
 # 3. Starting Apache.
 CMD sh -c " \
       if [ "${REMOTE_DEBUG}" = "1" ]; then \
-        sed -i s/\;xdebug\.remote/xdebug\.remote/ /usr/local/etc/php/conf.d/xdebug.ini; \
+        sed -i 's/\;xdebug\.remote/xdebug\.remote/' /usr/local/etc/php/conf.d/xdebug.ini; \
       fi \
       && mkcert -install \
       && mkcert -cert-file /certs/docker.pem -key-file /certs/docker-key.pem \
