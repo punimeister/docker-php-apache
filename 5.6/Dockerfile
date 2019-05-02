@@ -32,7 +32,7 @@ RUN buildDeps=" \
  && pecl install memcached-2.2.0 redis \
  && docker-php-ext-enable memcached.so redis.so \
  && apt-get purge -y --auto-remove $buildDeps \
- && rm -r /var/lib/apt/lists/* \
+ && rm -rf /var/lib/apt/lists/* \
  && a2enmod rewrite expires ssl
 
 # Install Composer.
