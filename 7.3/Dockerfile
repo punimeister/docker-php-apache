@@ -20,6 +20,7 @@ RUN buildDeps=" \
       libpq-dev \
       libxml2-dev \
       libzip-dev \
+      unzip \
       wget \
     " \
  && apt-get update \

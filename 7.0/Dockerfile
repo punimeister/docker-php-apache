@@ -20,6 +20,7 @@ RUN buildDeps=" \
       libpng-dev \
       libpq-dev \
       libxml2-dev \
+      unzip \
       wget \
     " \
  && apt-get update \
