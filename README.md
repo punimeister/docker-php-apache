@@ -17,7 +17,7 @@
 
 `DocumentRoot ${APP_HOME_DIR}${PUBLIC_DIR}`
 
-### `REMOTE_DEBUG` (default = '0')
+### `REMOTE_DEBUG` (default = 0)
 
 When set to 1 enable to remote debug (Xdebug)
 
