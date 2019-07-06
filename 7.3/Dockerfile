@@ -1,80 +1,75 @@
-FROM php:7.3-apache
+FROM centos:centos7
 
-# Install PHP extensions and PECL modules.
-RUN buildDeps=" \
-      default-libmysqlclient-dev \
-      libbz2-dev \
-      libmemcached-dev \
-      libsasl2-dev \
-    " \
-    runtimeDeps=" \
+# Install Apache and PHP.
+RUN commonDeps=" \
       curl \
       git \
-      libfreetype6-dev \
-      libicu-dev \
-      libjpeg-dev \
-      libldap2-dev \
-      libmemcachedutil2 \
-      libnss3-tools \
-      libpng-dev \
-      libpq-dev \
-      libxml2-dev \
-      libzip-dev \
       unzip \
+      vim \
       wget \
+      zip \
     " \
- && apt-get update \
- && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $buildDeps $runtimeDeps \
- && docker-php-ext-install bcmath bz2 calendar iconv intl mbstring mysqli opcache pdo_mysql pdo_pgsql pgsql soap zip \
- && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
- && docker-php-ext-install gd \
- && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
- && docker-php-ext-install ldap \
- && docker-php-ext-install exif \
- && pecl install memcached redis \
- && docker-php-ext-enable memcached.so redis.so \
- && apt-get purge -y --auto-remove $buildDeps \
- && rm -rf /var/lib/apt/lists/* \
- && a2enmod rewrite expires ssl headers
+    apacheDeps=" \
+      httpd \
+      mod_ssl \
+    " \
+    phpDeps=" \
+      php \
+      php-gd \
+      php-mbstring \
+      php-mcrypt \
+      php-mysql \
+      php-opcache \
+      php-xml \
+      php-zip \
+      php-pecl-xdebug \
+    " \
+ && yum update -y \
+ && yum install -y $commonDeps \
+ && yum install -y $apacheDeps \
+ && yum install -y epel-release \
+ && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
+ && yum --enablerepo=remi-php73 install -y $phpDeps \
+ && yum clean all
 
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
  && ln -s $(composer config --global home) /root/composer
 ENV PATH=$PATH:/root/composer/vendor/bin COMPOSER_ALLOW_SUPERUSER=1
 
-# Install Xdebug.
-RUN pecl install xdebug-2.7.2
-
 # Install mkcert.
 WORKDIR /usr/local/bin
 RUN wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64 \
- && chmod +x mkcert
+ && chmod +x mkcert \
+ && mkdir -m 755 /certs
 
 # Copy config files.
-COPY default.conf /etc/apache2/sites-enabled/000-default.conf
-COPY ssl.conf /etc/apache2/sites-enabled/000-ssl.conf
-COPY security.conf /etc/apache2/sites-enabled/000-security.conf
-COPY php.ini /usr/local/etc/php/
-COPY xdebug.ini /usr/local/etc/php/conf.d/
+COPY default.conf security.conf /etc/httpd/conf.d/
+COPY php.ini /etc/
 
-# Initial settings.
-ENV REMOTE_DEBUG='0'
-RUN mkdir -m 755 /certs
-WORKDIR /var/www/html
+# Declare default environment variables.
+ENV APACHE_LOG_DIR '/etc/httpd'
+ENV APACHE_SERVER_ALIAS ''
+ENV APACHE_SERVER_NAME 'app.local'
+ENV APP_HOME_DIR '/var/www/html'
+ENV PUBLIC_DIR '/public'
+ENV REMOTE_DEBUG '0'
 
-# 1. Rewrite xdebug.ini if needed.
+WORKDIR /
+
+# 1. Rewrite Xdebug config in php.ini if necesarry.
 # 2. Make locally trusted development certificates.
-# 3. Starting Apache.
+# 3. Start Apache.
 CMD sh -c " \
       if [ "${REMOTE_DEBUG}" = "1" ]; then \
-        sed -i 's/\;xdebug\.remote/xdebug\.remote/' /usr/local/etc/php/conf.d/xdebug.ini; \
+        sed -i 's/\;xdebug\.remote/xdebug\.remote/' /etc/php.ini; \
       fi \
       && mkcert -install \
       && mkcert -cert-file /certs/docker.pem -key-file /certs/docker-key.pem \
-         '*.app.local' \
-         app.local \
+         '*.${APACHE_SERVER_NAME}' \
+         ${APACHE_SERVER_NAME} \
          localhost \
          127.0.0.1 \
          192.168.99.100 \
-      && apache2-foreground \
+      && /usr/sbin/httpd -DFOREGROUND \
     "
