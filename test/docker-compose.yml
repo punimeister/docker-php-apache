@@ -6,6 +6,8 @@ services:
     image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
+      APP_HOME_DIR: '/var/www/html'
+      PUBLIC_DIR: '/public'
       REMOTE_DEBUG: '0'
     ports:
       - '80:80'
@@ -13,3 +15,4 @@ services:
     volumes:
       - './certs:/root/.local/share/mkcert'
       - './web:/var/www/html'
+    working_dir: '/var/www/html'

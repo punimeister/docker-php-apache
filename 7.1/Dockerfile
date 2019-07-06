@@ -29,7 +29,7 @@ RUN commonDeps=" \
  && yum install -y $apacheDeps \
  && yum install -y epel-release \
  && rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm \
- && yum --enablerepo=remi-php56 install -y $phpDeps \
+ && yum --enablerepo=remi-php71 install -y $phpDeps \
  && yum clean all
 
 # Install Composer.
