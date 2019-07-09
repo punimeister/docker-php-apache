@@ -9,13 +9,17 @@
 
 ## Environment Variables
 
+### `APACHE_ACCESS_FILE` (default = '.htaccess.docker .htaccess')
+
+`AccessFileName ${APACHE_ACCESS_FILE}` in default.conf
+
 ### `APP_HOME_DIR` (default = '/var/www/html')
 
-`DocumentRoot ${APP_HOME_DIR}${PUBLIC_DIR}`
+`DocumentRoot ${APP_HOME_DIR}${PUBLIC_DIR}` in default.conf
 
 ### `PUBLIC_DIR` (default = '/public')
 
-`DocumentRoot ${APP_HOME_DIR}${PUBLIC_DIR}`
+`DocumentRoot ${APP_HOME_DIR}${PUBLIC_DIR}` in default.conf
 
 ### `REMOTE_DEBUG` (default = 0)
 
@@ -53,6 +57,7 @@ services:
     image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
+      APACHE_ACCESS_FILE: '.htaccess.docker .htaccess'
       APP_HOME_DIR: '/var/www/html'
       PUBLIC_DIR: '/public'
       REMOTE_DEBUG: '0'

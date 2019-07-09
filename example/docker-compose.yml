@@ -6,6 +6,7 @@ services:
     image: 'punimeister/php-apache:latest'
     restart: 'on-failure'
     environment:
+      APACHE_ACCESS_FILE: '.htaccess.docker .htaccess'
       APP_HOME_DIR: '/var/www/html'
       PUBLIC_DIR: '/public'
       REMOTE_DEBUG: '0'

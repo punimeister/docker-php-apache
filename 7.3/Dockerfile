@@ -48,6 +48,7 @@ COPY default.conf security.conf /etc/httpd/conf.d/
 COPY php.ini /etc/
 
 # Declare default environment variables.
+ENV APACHE_ACCESS_FILE '.htaccess.docker .htaccess'
 ENV APACHE_LOG_DIR '/etc/httpd'
 ENV APACHE_SERVER_ALIAS ''
 ENV APACHE_SERVER_NAME 'app.local'
