@@ -20,6 +20,7 @@ RUN commonDeps=" \
       php-mcrypt \
       php-mysql \
       php-opcache \
+      php-process \
       php-xml \
       php-zip \
       php-pecl-xdebug \
