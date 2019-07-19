@@ -21,6 +21,7 @@ RUN commonDeps=" \
       php-mysql \
       php-opcache \
       php-process \
+      php-soap \
       php-xml \
       php-zip \
       php-pecl-xdebug \
