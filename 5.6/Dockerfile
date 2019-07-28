@@ -46,7 +46,8 @@ RUN wget -O mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.3.
  && mkdir -m 755 /certs
 
 # Copy config files.
-COPY default.conf security.conf /etc/httpd/conf.d/
+COPY httpd.conf /etc/httpd/conf/
+COPY ssl.conf security.conf /etc/httpd/conf.d/
 COPY php.ini /etc/
 
 # Declare default environment variables.
