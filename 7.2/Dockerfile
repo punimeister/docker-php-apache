@@ -53,7 +53,6 @@ COPY php.ini /etc/
 # Declare default environment variables.
 ENV APACHE_ACCESS_FILE '.htaccess.docker .htaccess'
 ENV APACHE_LOG_DIR '/etc/httpd'
-ENV APACHE_SERVER_ALIAS ''
 ENV APACHE_SERVER_NAME 'app.local'
 ENV APP_HOME_DIR '/var/www/html'
 ENV PUBLIC_DIR '/public'
