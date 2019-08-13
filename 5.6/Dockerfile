@@ -15,6 +15,7 @@ RUN commonDeps=" \
     " \
     phpDeps=" \
       php \
+      php-bcmath \
       php-gd \
       php-mbstring \
       php-mcrypt \
