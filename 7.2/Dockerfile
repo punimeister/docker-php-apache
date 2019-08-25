@@ -19,7 +19,7 @@ RUN commonDeps=" \
       php-gd \
       php-mbstring \
       php-mcrypt \
-      php-mysql \
+      php-mysqlnd \
       php-opcache \
       php-process \
       php-soap \
