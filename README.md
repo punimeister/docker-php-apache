@@ -48,24 +48,24 @@ When set to 1 enable to remote debug (Xdebug)
 
 ### docker-compose.yml
 
-```
+```yaml
 version: '3'
 
 services:
 
   php-apache:
-    image: 'punimeister/php-apache:latest'
-    restart: 'on-failure'
+    image: punimeister/php-apache:latest
+    restart: on-failure
     environment:
-      APACHE_ACCESS_FILE: '.htaccess.docker .htaccess'
-      APP_HOME_DIR: '/var/www/html'
-      PUBLIC_DIR: '/public'
-      REMOTE_DEBUG: '0'
+      APACHE_ACCESS_FILE: .htaccess.docker .htaccess
+      APP_HOME_DIR: /var/www/html
+      PUBLIC_DIR: /public
+      REMOTE_DEBUG: 0
     ports:
-      - '80:80'
-      - '443:443'
+      - 80:80
+      - 443:443
     volumes:
-      - './certs:/root/.local/share/mkcert'
-      - './web:/var/www/html'
-    working_dir: '/var/www/html'
+      - ./certs:/root/.local/share/mkcert
+      - ./web:/var/www/html
+    working_dir: /var/www/html
 ```
